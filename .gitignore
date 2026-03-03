@@ -1,0 +1,18 @@
+# secrets/config
+config.json
+*.env
+
+# data
+*.db
+incoming/
+data/
+
+# python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# misc
+*.log
+.DS_Store
