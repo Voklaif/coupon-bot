@@ -1,0 +1,14 @@
+{
+  "telegram_bot_token": "REPLACE_ME",
+  "openai_api_key": "REPLACE_ME",
+  "db_path": "/data/coupons.db",
+  "incoming_dir": "/data/incoming",
+  "health_file": "/app/runtime/bot_health.txt",
+  "openai_text_model": "gpt-4.1-mini",
+  "openai_vision_model": "gpt-4.1-mini",
+  "openai_timeout_seconds": 60,
+  "openai_max_retries": 2,
+  "openai_retry_backoff_seconds": 1.5,
+  "reminder_days": [30, 7, 1],
+  "scan_every_minutes": 30
+}

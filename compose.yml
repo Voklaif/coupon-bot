@@ -1,8 +1,8 @@
-# Backward-compatible file. Prefer: compose.yml + compose.dev.yml / compose.prod.yml
 services:
   coupon-bot:
     build: .
     image: ${APP_IMAGE:-coupon-bot:local}
+    user: "${PUID:-1000}:${PGID:-1000}"
     command: ["python", "coupon_bot.py", "--config", "/config/config.json"]
     env_file:
       - ${ENV_FILE:-.env.dev}
@@ -10,11 +10,18 @@ services:
       - ${DATA_DIR:-./data}:/data
       - ${CONFIG_DIR:-./config}:/config:ro
       - ${RUNTIME_DIR:-./runtime}:/app/runtime
+    healthcheck:
+      test: ["CMD", "python", "scripts/healthcheck_bot.py", "--health-file", "/app/runtime/bot_health.txt", "--max-age-seconds", "${BOT_HEALTH_MAX_AGE_SECONDS:-720}"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
     restart: unless-stopped
 
   coupon-ui:
     build: .
     image: ${APP_IMAGE:-coupon-bot:local}
+    user: "${PUID:-1000}:${PGID:-1000}"
     command:
       [
         "sh",
@@ -27,6 +34,13 @@ services:
       - ${DATA_DIR:-./data}:/data
       - ${CONFIG_DIR:-./config}:/config:ro
       - ${RUNTIME_DIR:-./runtime}:/app/runtime
-    ports:
-      - "${UI_HOST_PORT:-8080}:8080"
+    depends_on:
+      coupon-bot:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "python", "scripts/healthcheck_ui.py", "--url", "http://127.0.0.1:8080/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 20s
     restart: unless-stopped
