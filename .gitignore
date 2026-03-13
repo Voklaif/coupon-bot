@@ -1,12 +1,10 @@
 # secrets/config
 config.json
-*.env
-.env.dev
-.env.prod
+.env
+.env.*
+!.env.example
 .env.local
 config/config.json
-config/config.dev.json
-config/config.prod.json
 
 # data
 *.db

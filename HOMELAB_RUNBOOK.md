@@ -2,7 +2,7 @@
 
 ## Topology
 
-- `coupon-bot` and `coupon-ui` run with `compose.yml + compose.prod.yml`.
+- `coupon-bot` and `coupon-ui` run from `compose.yml`.
 - UI is exposed internally on port `8080` and should be routed via SWAG.
 - Data and runtime volumes:
   - `/data` for SQLite and incoming images
@@ -22,11 +22,11 @@ Keep UI basic auth enabled at app level (`UI_USERNAME`, `UI_PASSWORD`) even behi
 ## Operational checks
 
 - Container health:
-  - `docker compose --env-file .env.prod -f compose.yml -f compose.prod.yml ps`
+  - `docker compose ps`
 - Bot logs:
-  - `docker compose --env-file .env.prod -f compose.yml -f compose.prod.yml logs -f coupon-bot`
+  - `docker compose logs -f coupon-bot`
 - UI logs:
-  - `docker compose --env-file .env.prod -f compose.yml -f compose.prod.yml logs -f coupon-ui`
+  - `docker compose logs -f coupon-ui`
 
 ## Failure modes
 
@@ -36,7 +36,7 @@ Keep UI basic auth enabled at app level (`UI_USERNAME`, `UI_PASSWORD`) even behi
   - verify DB path and permissions in mounted volume
 - UI returns 401 unexpectedly:
   - verify SWAG forwards `Authorization` header
-  - verify `.env.prod` credentials
+  - verify `.env` credentials
 - Reminder anomalies:
   - check `scan_every_minutes` and `reminder_days` in config
   - verify server clock and timezone behavior
