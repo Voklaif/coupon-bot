@@ -1,11 +1,19 @@
 # secrets/config
 config.json
 *.env
+.env.dev
+.env.prod
+.env.local
+config/config.json
+config/config.dev.json
+config/config.prod.json
 
 # data
 *.db
 incoming/
 data/
+runtime/
+backups/
 
 # python
 __pycache__/

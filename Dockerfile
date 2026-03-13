@@ -1,13 +1,20 @@
 FROM python:3.11-slim
 
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
+
 WORKDIR /app
 
+RUN addgroup --system app && adduser --system --ingroup app app
+
 COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+RUN python -m pip install --no-cache-dir --disable-pip-version-check -r requirements.txt
 
 COPY coupon_bot.py coupon_ui.py ./
+COPY scripts ./scripts
 
-ENV PYTHONUNBUFFERED=1
+RUN mkdir -p /app/runtime /data /config && chown -R app:app /app /data /config
 
-# Default runs the Telegram bot; override command for UI.
-CMD ["python", "coupon_bot.py", "--config", "/data/config.json"]
+USER app
+
+CMD ["python", "coupon_bot.py", "--config", "/config/config.json"]
