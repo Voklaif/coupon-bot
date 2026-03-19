@@ -15,7 +15,7 @@ fi
 
 git fetch --tags --prune
 git checkout "$TAG"
-docker compose --env-file .env.prod -f compose.yml -f compose.prod.yml pull || true
-docker compose --env-file .env.prod -f compose.yml -f compose.prod.yml up -d --build
+docker compose pull || true
+docker compose up -d --build
 
 echo "Deployment completed for tag: $TAG"
