@@ -2,14 +2,14 @@
 
 ## Immediate setup
 
-- [ ] Copy `.env.dev.example` -> `.env.dev` and set `UI_PASSWORD`
-- [ ] Copy `config.example.dev.json` -> `config/config.json` and set API tokens
-- [ ] Start dev stack: `make dev-up`
+- [ ] Copy `.env.example` -> `.env` and set `UI_PASSWORD`
+- [ ] Copy `config.example.json` -> `config/config.json` and set API tokens
+- [ ] Start stack: `make up`
 - [ ] Verify dashboard auth and bot `/status`
 
 ## Homelab preparation
 
-- [ ] Create `.env.prod` from `.env.prod.example`
+- [ ] Create `.env` on server from `.env.example`
 - [ ] Place production config at `config/config.json` on server
 - [ ] Wire SWAG route to `coupon-ui:8080`
 - [ ] Run first manual deployment with `DEPLOY_CHECKLIST.md`
